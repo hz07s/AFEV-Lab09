@@ -1,0 +1,11 @@
+MODULE main
+VAR
+  state : {locked, unlocked};
+  coin : boolean;
+ASSIGN
+  init(state) := locked;
+  next(state) := case
+    (state = locked) & coin : unlocked;
+    (state = unlocked) : locked;
+    TRUE : state;
+  esac;

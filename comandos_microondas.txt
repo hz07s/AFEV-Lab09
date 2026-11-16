@@ -1,0 +1,8 @@
+read_model -i microondas.smv
+flatten_hierarchy
+encode_variables
+build_model
+check_ltlspec -p "G (state = cooking -> door = closed)"
+check_ltlspec -p "G (state = cooking -> F (state != cooking))"
+check_ltlspec -p "F (state = done)"
+quit

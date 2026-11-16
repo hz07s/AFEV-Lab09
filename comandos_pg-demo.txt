@@ -1,0 +1,7 @@
+read_model -i pg-demo.smv
+flatten_hierarchy
+encode_variables
+build_model
+check_ltlspec -p "G (x >= 0)"
+check_ltlspec -p "F (x >= 5)"
+quit

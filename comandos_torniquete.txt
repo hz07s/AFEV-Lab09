@@ -1,0 +1,9 @@
+read_model -i torniquete.smv
+flatten_hierarchy
+encode_variables
+build_model
+check_ltlspec -p "G (state = unlocked -> X state = locked)"
+check_ltlspec -p "G (coin -> X state = unlocked)"
+check_ltlspec -p "G F (state = locked)"
+check_ltlspec -p "F (state = unlocked)"
+quit

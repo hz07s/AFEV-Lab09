@@ -1,0 +1,27 @@
+MODULE main
+VAR
+  state : {idle, cooking, paused, done};
+  door : {closed, open};
+  event : {none, start, open_door, close_door};
+  timer : 0 .. 3;
+ASSIGN
+  init(state) := idle;
+  init(door) := closed;
+  init(timer) := 0;
+  next(door) := case
+    event = open_door : open;
+    event = close_door : closed;
+    TRUE : door;
+  esac;
+  next(state) := case
+    (state = cooking) & (event = open_door) : paused;
+    (state = cooking) & (timer = 1) : done;
+    (state != cooking) & (event = start) & (door = closed) : cooking;
+    TRUE : state;
+  esac;
+  next(timer) := case
+    (state = cooking) & (event = open_door) : timer;
+    (state = cooking) & (timer > 0) : timer - 1;
+    (state = idle | state = done) & (event = start) & (door = closed) : 3;
+    TRUE : timer;
+  esac;
